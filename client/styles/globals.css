@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+=========================
+general project resets
+=========================
+*/
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@layer utilities {
+  /* 
+===================================================================================
+custom styles configured withing the layer directive to aid/provide re-usability
+===================================================================================
+*/
+
+  /* 
+============================
+google font-customization 
+============================
+*/
+
+  .poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .nunito-sans {
+    font-family: 'Nunito Sans', sans-serif;
+  }
+
+  .montserrat {
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .trans--bg_light {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+/* 
+=================
+regular styles
+=================
+*/
+
+.logo:before {
+  content: '';
+  position: absolute;
+  left: -30px;
+  top: 4px;
+  /* margin-right: 20px; */
+  background-color: black;
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  border: 4px solid white;
+}
+
+.waitlist-overlay .logo:before {
+  background-color: white;
+  border: 4px solid black;
+}
+
+.bg--glass_white {
+  @apply trans--bg_light;
+  backdrop-filter: blur(15px);
+  /* transition: opacity 0.75s ease; */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100;
+  }
+}
+
+.fade-in {
+  animation-name: fadeIn;
+  animation-duration: 0.75s;
+  animation-timing-function: ease;
+}
+
+input {
+  @apply bg-gray-200 border-b-[2px] border-gray-700;
+}
