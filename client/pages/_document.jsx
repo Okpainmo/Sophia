@@ -21,6 +21,9 @@ function Document() {
           href='https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,900&family=Nunito+Sans:wght@400;700&family=Poppins:wght@400;700;800;900&display=swap'
           rel='stylesheet'
         />
+
+        {/* favicon */}
+        <link rel='icon' type='image/png' href='../assets/images/favicon.png' />
       </Head>
       <body>
         <Main />
