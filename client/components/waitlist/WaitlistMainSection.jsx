@@ -40,7 +40,7 @@ function WaitlistMainSection({ waitlistOverlayShow }) {
           Click the button below, to Join our waitlist and gain early access.
         </p>
         <button
-          className='nunito-sans mt-10 bg-black px-4 py-3 text-white w-full rounded text-[20px] font-bold'
+          className='nunito-sans mt-10 bg-black px-4 py-3 text-white w-full rounded text-[16px] font-bold'
           onClick={waitlistOverlayShow}
         >
           Gain Early Access
