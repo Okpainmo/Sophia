@@ -58,9 +58,9 @@ app.post('/join-waitlist', async (req, res) => {
   transporter.sendMail(mailOptions, (err, success) => {
     if (err) {
       console.log(err);
-      res.status(400).json({ waitlistWaiter, Requeststatus: 'failed' });
+      res.status(400).json({ waitlistWaiter, requestStatus: 'failed' });
     } else {
-      res.status(201).json({ waitlistWaiter, Requeststatus: 'success' });
+      res.status(201).json({ waitlistWaiter, requestStatus: 'success' });
       console.log('Email sent successfully');
     }
   });
