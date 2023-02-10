@@ -28,7 +28,7 @@ function WaitlistMainSection({ waitlistOverlayShow }) {
           Sophia is still in the development/testing phase. The project will
           provide a past question bank, a study feature for students to study
           online, a live CBT feature for students to practice mock examinations,
-          and any other relevant additional features.
+          and any other relevant additional feature(s).
         </p>
         <p className='nunito-sans text-[18px] pt-6'>
           You can Join the waitlist and gain early access to be among the first
