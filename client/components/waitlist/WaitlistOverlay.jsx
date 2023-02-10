@@ -94,7 +94,7 @@ function WaitlistOverlay({
         </div>
         <div className='w-full xsm:w-[80%] sm:w-[70%] md:w-[400px] mx-auto relative'>
           <div
-            className={`absolute items-center gap-[10px] justify-center top-[-100px] left-[25%] text-grey-500 shadow-md mb-8 mx-auto response-preloader text-center rounded-[10px] w-[200px] bg-white px-2 pt-[5px] pb-[9px] ${
+            className={`absolute items-center gap-[10px] justify-center top-[-100px] left-[50%] ml-[-100px] text-grey-500 shadow-md mb-8 mx-auto response-preloader text-center rounded-[10px] w-[200px] bg-white px-2 pt-[5px] pb-[9px] ${
               showResponsePreloader ? 'flex' : 'hidden'
             }`}
           >
