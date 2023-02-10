@@ -8,8 +8,16 @@ function WaitlistOverlay({
   form,
   setForm,
 }) {
+  const [showResponsePreloader, setShowResponsePreLoader] = useState(false);
+
+  const ResponsePreloaderShow = () => {
+    setShowResponsePreLoader(true);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    ResponsePreloaderShow();
+
     const name = form.name;
     const email = form.email;
 
@@ -18,7 +26,7 @@ function WaitlistOverlay({
       // pass name as form input value in the axios post method
 
       console.log({ name, email });
-      const postRequest = axios.post(
+      const postRequest = await axios.post(
         'https://sophia-backend.onrender.com/join-waitlist',
         {
           name,
@@ -26,38 +34,36 @@ function WaitlistOverlay({
         }
       );
 
-      const response = await postRequest;
+      if (postRequest) {
+        setShowResponsePreLoader(false);
+      }
 
-      toast.promise(postRequest, {
-        loading: (response) => {
-          if (!response) {
-            return 'processing request';
+      console.log(postRequest);
+      if (
+        postRequest.status === 201 &&
+        postRequest.data.requestStatus === 'success'
+      ) {
+        toast.success(
+          'Email added successfully. Please check your email, we just sent you a welcome message.',
+          {
+            duration: 6000,
           }
-        },
-        success: (response) => {
-          if (
-            response.status === 201 &&
-            response.data.Requeststatus === 'success'
-          ) {
-            return 'email added successfully';
-          }
-        },
-        error: (response) => {
-          if (
-            response.status !== 201 &&
-            response.data.Requeststatus !== 'success'
-          ) {
-            return 'request failed, please try again';
-          }
-        },
-        // loading: 'Loading',
-        // success: 'Got the data',
-        // error: 'Error when fetching',
-      });
+        );
+      }
 
-      console.log(response);
+      if (
+        postRequest.status !== 201 &&
+        postRequest.data.requestStatus !== 'success'
+      ) {
+        toast.error('request declined: please try again', {
+          duration: 10000,
+        });
+      }
     } catch (error) {
       console.log(error);
+      toast.error('request declined: please try again', {
+        duration: 10000,
+      });
     }
   };
 
@@ -67,7 +73,7 @@ function WaitlistOverlay({
     <>
       <Toaster />
       <section
-        className={`waitlist-overlay bg--glass_white fixed top-0 left-0 right-0 min-h-screen pt-[150px] px-3 ${
+        className={`waitlist-overlay bg--glass_white fixed top-0 left-0 right-0 min-h-screen pt-[118px] px-3 ${
           hideWaitlistOverlay ? 'hidden ' : 'block fade-in'
         }`}
       >
@@ -86,13 +92,37 @@ function WaitlistOverlay({
             <path d='M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z' />
           </svg>
         </div>
-        <div className='w-full xsm:w-[80%] sm:w-[70%] md:w-[400px] mx-auto'>
+        <div className='w-full xsm:w-[80%] sm:w-[70%] md:w-[400px] mx-auto relative'>
+          <div
+            className={`absolute items-center gap-[10px] justify-center top-[-100px] left-[25%] text-grey-500 shadow-md mb-8 mx-auto response-preloader text-center rounded-[10px] w-[200px] bg-white px-2 pt-[5px] pb-[9px] ${
+              showResponsePreloader ? 'flex' : 'hidden'
+            }`}
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='20'
+              height='20'
+              className='rotating relative top-[2px]'
+              fill='currentColor'
+              viewBox='0 0 16 16'
+            >
+              <path d='M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z' />
+              <path
+                fill-rule='evenodd'
+                d='M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z'
+              />
+            </svg>
+            <span>processing request.</span>
+          </div>
           <div className='flex justify-center pl-[15px] mb-10'>
             <span className='logo poppins text-black text-2xl font-bold relative mx-auto'>
               sophia
             </span>
           </div>
-          <form onSubmit={handleSubmit}>
+          <form
+            onSubmit={handleSubmit}
+            className='waitlist-overlay bg--glass_white shadow-lg px-[15px] xsm:px-[30px] py-[30px] rounded-md'
+          >
             <div className='input-group flex flex-col'>
               <label className='nunito-sans font-bold mb-2' htmlFor='name'>
                 Name
