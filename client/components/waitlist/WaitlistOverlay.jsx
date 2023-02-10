@@ -56,13 +56,13 @@ function WaitlistOverlay({
         postRequest.data.requestStatus !== 'success'
       ) {
         toast.error('request declined: please try again', {
-          duration: 10000,
+          duration: 15000,
         });
       }
     } catch (error) {
       console.log(error);
       toast.error('request declined: please try again', {
-        duration: 10000,
+        duration: 15000,
       });
     }
   };
